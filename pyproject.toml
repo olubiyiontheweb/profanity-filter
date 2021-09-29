@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "profanity-filter"
-version = "1.4.0"
+name = "profanity-filter2"
+version = "1.4.2"
 description = "A Python library for detecting and filtering profanity"
 authors = ["Roman Inflianskas <infroma@gmail.com>"]
 maintainers = ["Ruslan Gareev <mail@ruslangareev.ru>"]

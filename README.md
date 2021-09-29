@@ -1,10 +1,10 @@
-# profanity-filter: A Python library for detecting and filtering profanity
+# profanity-filter2: A Python library for detecting and filtering profanity
 [![License](https://img.shields.io/pypi/l/profanity-filter.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/profanity-filter.svg)
 [![PyPI](https://img.shields.io/pypi/v/profanity-filter.svg)](https://pypi.org/project/profanity-filter/)
 
-## Archived
-This library is no longer a priority for me. Feel free to fork it.
+## Attention!
+This library is forked from profanity-filter, because its author dropped support.
 
 ## Table of contents
 <!--ts-->
@@ -194,9 +194,9 @@ If you want to filter profanity in another language you still need to read it.
 For minimal setup you need to install `profanity-filter` with is bundled with `spacy` and download `spacy`
 model for tokenization and lemmatization:
 ```shell
-$ pip install profanity-filter
+$ pip install profanity-filter2
 $ # Skip next line if you want to filter profanity in another language
-$ python -m spacy download en
+$ python -m spacy download en_core_web_sm
 ```
 
 For more info about Spacy models read: https://spacy.io/usage/models/.
@@ -231,7 +231,7 @@ $ mv en_US.dic en.dic
 Let's take Russian for example on how to add new language support.
 
 #### Russian language support
-Firstly, we need to provide file `profanity_filter/data/ru_badwords.txt` which contains a newline separated list of
+Firstly, we need to provide file `profanity_filter/data/ru_core_news_sm_profane_words.txt` which contains a newline separated list of
 profane words. For Russian it's already present, so we skip file generation.
 
 Next, we need to download the appropriate Spacy model. Unfortunately, Spacy model for Russian is not yet ready, so we 
@@ -253,7 +253,7 @@ https://cgit.freedesktop.org/libreoffice/dictionaries/plain/:
 For Russian and Ukrainian languages to achieve better results we suggest you to install `pymorphy2`.
 To install `pymorphy2` with Russian dictionary run:
 ```shell
-$ pip install -U profanity-filter[pymorphy2-ru] git+https://github.com/kmike/pymorphy2@ca1c13f6998ae2d835bdd5033c17197dcba84cf4#egg=pymorphy2
+$ pip install -U profanity-filter2[pymorphy2-ru] git+https://github.com/kmike/pymorphy2@ca1c13f6998ae2d835bdd5033c17197dcba84cf4#egg=pymorphy2
 ```
 
 ### Multilingual support
@@ -272,13 +272,13 @@ $ sudo zypper install libicu-devel
 
 Then run:
 ```shell
-$ pip install -U profanity-filter[multilingual]
+$ pip install -U profanity-filter2[multilingual]
 ```
 
 ### RESTful web service
 Run:
 ```shell
-$ pip install -U profanity-filter[web]
+$ pip install -U profanity-filter2[web]
 ```
 
 ## Troubleshooting
