@@ -16,7 +16,7 @@ class Config(BaseModel):
     cache_redis_connection_url: Optional[str] = None
     censor_char: str = '*'
     censor_whole_words: bool = True
-    languages: List[Language] = ['en']
+    languages: List[Language] = ['en_core_web_sm']
     max_relative_distance: float = 0.34
 
     @classmethod

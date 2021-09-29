@@ -21,6 +21,8 @@ class SpacyProfanityFilterComponent:
         self._stop_on_first_profane_word = stop_on_first_profane_word
 
     # noinspection PyProtectedMember
+    # TODO: Change getting tokens to custom tokenizer:
+    #  https://spacy.io/usage/linguistic-features#tokenization
     def __call__(self, doc: Doc, language: Language = None, stop_on_first_profane_word: Optional[bool] = None) -> Doc:
         self.register_extensions(exist_ok=True)
         if language is None:

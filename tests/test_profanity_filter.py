@@ -41,7 +41,7 @@ def test_from_yaml():
             analyses=[AnalysisType.DEEP, AnalysisType.MULTILINGUAL],
             censor_char='#',
             censor_whole_words=False,
-            languages=['ru', 'en'],
+            languages=['ru_core_news_sm', 'en_core_web_sm'],
             max_relative_distance=0.2,
         )
         config_dict = config.dict()
@@ -86,8 +86,8 @@ def test_censor_char(pf):
 def test_custom_profane_word_dictionaries(pf, empty_profane_word_dictionaries):
     assert pf.custom_profane_word_dictionaries == empty_profane_word_dictionaries
     profane_words = ['unicorn', 'windows']
-    pf.custom_profane_word_dictionaries = {'en': profane_words}
-    assert (pf.custom_profane_word_dictionaries == create_profane_word_dictionaries(en=OrderedSet(profane_words)))
+    pf.custom_profane_word_dictionaries = {'en_core_web_sm': profane_words}
+    assert (pf.custom_profane_word_dictionaries == create_profane_word_dictionaries(en_core_web_sm=OrderedSet(profane_words)))
     assert pf.censor_word('unicorn') == Word(uncensored='unicorn', censored='*******', original_profane_word='unicorn')
     assert pf.censor_word('windows') == Word(uncensored='windows', censored='*******', original_profane_word='windows')
     assert pf.censor_word('fuck') == Word(uncensored='fuck', censored='fuck', original_profane_word=None)
@@ -97,8 +97,8 @@ def test_custom_profane_word_dictionaries(pf, empty_profane_word_dictionaries):
 def test_extra_profane_word_dictionaries(pf, empty_profane_word_dictionaries):
     assert pf.extra_profane_word_dictionaries == empty_profane_word_dictionaries
     extra_profane_words = ['hey', 'like']
-    pf.extra_profane_word_dictionaries = {'en': extra_profane_words}
-    assert (pf.extra_profane_word_dictionaries == create_profane_word_dictionaries(en=OrderedSet(extra_profane_words)))
+    pf.extra_profane_word_dictionaries = {'en_core_web_sm': extra_profane_words}
+    assert (pf.extra_profane_word_dictionaries == create_profane_word_dictionaries(en_core_web_sm=OrderedSet(extra_profane_words)))
     assert pf.censor_word('hey') == Word(uncensored='hey', censored='***', original_profane_word='hey')
     assert pf.censor_word('like') == Word(uncensored='like', censored='****', original_profane_word='like')
     assert pf.censor_word('fuck') == Word(uncensored='fuck', censored='****', original_profane_word='fuck')
@@ -106,19 +106,19 @@ def test_extra_profane_word_dictionaries(pf, empty_profane_word_dictionaries):
 
 @with_config(TestConfig())
 def test_restore_words(pf, empty_profane_word_dictionaries):
-    pf.custom_profane_word_dictionaries = {'en': ['cupcakes']}
-    pf.extra_profane_word_dictionaries = {'en': ['dibs']}
+    pf.custom_profane_word_dictionaries = {'en_core_web_sm': ['cupcakes']}
+    pf.extra_profane_word_dictionaries = {'en_core_web_sm': ['dibs']}
     pf.restore_profane_word_dictionaries()
     assert pf.custom_profane_word_dictionaries == empty_profane_word_dictionaries
     assert pf.extra_profane_word_dictionaries == empty_profane_word_dictionaries
     profane_word_dictionaries = pf.profane_word_dictionaries
-    assert 'dibs' not in profane_word_dictionaries['en']
-    assert 'cupcakes' not in profane_word_dictionaries['en']
+    assert 'dibs' not in profane_word_dictionaries['en_core_web_sm']
+    assert 'cupcakes' not in profane_word_dictionaries['en_core_web_sm']
 
 
 @with_config(TestConfig())
 def test_tokenization(pf):
-    pf.custom_profane_word_dictionaries = {'en': ['chocolate']}
+    pf.custom_profane_word_dictionaries = {'en_core_web_sm': ['chocolate']}
     assert pf.censor(TEST_STATEMENT) == "Hey, I like unicorns, *********, oranges and man's blood, turd!"
 
 
@@ -182,22 +182,22 @@ def test_deep_analysis_with_censor_whole_words_false(pf):
     assert pf.censor_word('h0r1h0r1') == Word(uncensored='h0r1h0r1', censored='***1***1', original_profane_word='h0r')
 
 
-@with_config(TestConfig(languages=('ru', 'en')))
+@with_config(TestConfig(languages=('ru_core_news_sm', 'en_core_web_sm')))
 def test_languages(pf):
-    assert pf.languages == OrderedSet(['ru', 'en'])
-    assert pf.languages_str == 'ru, en'
+    assert pf.languages == OrderedSet(['ru_core_news_sm', 'en_core_web_sm'])
+    assert pf.languages_str == 'ru_core_news_sm, en_core_web_sm'
 
 
-@with_config(TestConfig(languages=('ru', 'en')))
+@with_config(TestConfig(languages=('ru_core_news_sm', 'en_core_web_sm')))
 def test_russian(pf):
     assert pf.censor_word('бля') == Word(uncensored='бля', censored='***', original_profane_word='бля')
 
 
-@with_config(TestConfig(analyses=frozenset([AnalysisType.DEEP]), languages=('ru', 'en')))
+@with_config(TestConfig(analyses=frozenset([AnalysisType.DEEP]), languages=('ru_core_news_sm', 'en_core_web_sm')))
 def test_russian_deep_analysis(pf):
     assert pf.censor_word('бл@ка') == Word(uncensored='бл@ка', censored='*****', original_profane_word='бля')
 
 
-@with_config(TestConfig(analyses=frozenset([AnalysisType.MULTILINGUAL]), languages=('ru', 'en')))
+@with_config(TestConfig(analyses=frozenset([AnalysisType.MULTILINGUAL]), languages=('ru_core_news_sm', 'en_core_web_sm')))
 def test_multilingual(pf):
     assert pf.censor("Да бля, это просто shit какой-то!") == "Да ***, это просто **** какой-то!"

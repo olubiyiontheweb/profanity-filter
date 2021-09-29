@@ -19,7 +19,7 @@ class Config:
     censor_whole_words: bool = True
     deep_copy: bool = False
     dill: bool = False
-    languages: Tuple[Language, ...] = ('en', )
+    languages: Tuple[Language, ...] = ('en_core_web_sm', 'ru_core_news_sm')
 
 
 def create_profane_word_dictionaries(**kwargs) -> ProfaneWordDictionaries:
@@ -51,8 +51,8 @@ def pf(request) -> ProfanityFilter:
 
 @pytest.fixture
 def nlp(pf) -> spacy.language.Language:
-    nlp = spacy.load('en')
-    nlp.add_pipe(pf.spacy_component, last=True)
+    nlp = spacy.load('en_core_web_sm')
+    nlp.add_pipe(pf.spacy_component('en_core_web_sm'), last=True)
     return nlp
 
 
