@@ -747,15 +747,21 @@ class ProfanityFilter:
 
     def _detect_languages(self, text: str) -> Languages:
         fallback_language = self.languages[0]
-        fallback_result = OrderedSet([fallback_language])
+        fallback_result = [fallback_language]
         if AnalysisType.MULTILINGUAL in self.analyses:
             polyglot_output = polyglot.detect.Detector(text, quiet=True)
-            result = OrderedSet([language.code for language in polyglot_output.languages if language.code != 'un'])
+            result = [language.code for language in polyglot_output.languages if language.code != 'un']
             if not result:
                 result = fallback_result
         else:
             result = fallback_result
-        result = result.intersection(self.languages)
+
+        temp_result = []
+        for lang in self.languages:
+            if lang.startswith(tuple(result)):
+                temp_result.append(lang)
+
+        result = OrderedSet(temp_result)
         return result
 
     @staticmethod

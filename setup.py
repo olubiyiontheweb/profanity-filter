@@ -35,7 +35,7 @@ entry_points = \
 
 setup_kwargs = {
     'name': 'profanity-filter2',
-    'version': '1.4.2',
+    'version': '1.4.3',
     'description': 'A Python library for detecting and filtering profanity',
     'long_description': open('README.md').read(),
     'long_description_content_type': 'text/markdown; charset=UTF-8; variant=GFM',
