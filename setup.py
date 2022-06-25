@@ -15,7 +15,7 @@ install_requires = \
  'poetry-version>=0.1.3,<0.2.0',
  'pydantic>=1.3,<2.0',
  'redis>=3.2,<4.0',
- 'ruamel.yaml>=0.15.89,<0.16.0',
+ 'ruamel.yaml>=0.15.89,<0.17.0',
  'spacy>=3.0,<4.0']
 
 extras_require = \
